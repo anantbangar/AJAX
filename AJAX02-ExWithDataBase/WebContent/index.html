@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Ajax with DB</title>
+
+<script type="text/javascript">
+	
+	var request;
+	
+	function sendEmpInfo()
+	{
+		/* var id=document.indexForm.empId.value; */
+		var id=document.getElementById("empId").value;
+		var url="db.jsp?id="+id;
+		
+		if(window.XMLHttpRequest)
+		{
+			request=new XMLHttpRequest();		
+		}
+		else if(window.ActiveXObject)
+		{
+			request=new ActiveXObject("Microsoft.XMLHTTP");		
+		}
+		
+		try
+		{
+			request.onreadystatechange=getInfo;
+			request.open("GET",url,true);
+			request.send();
+		}
+		catch (e) 
+		{
+			alert("Not able to connect to server");
+		}
+	}
+	
+	function getInfo()
+	{
+		if(request.readyState==4)
+		{
+			var val=request.responseText;
+			document.getElementById('showSpan').innerHTML=val;
+		}
+	}
+</script>
+
+</head>
+
+<body>
+	<h1>Ajax Example with Data Base</h1>
+	
+	<form name="indexForm">
+		<input type="text" name="empId" id="empId" placeholder="enter emp id" />
+		<input type="button" name="showEmp" value="Show Emp" onclick="sendEmpInfo()"/>
+	</form>
+	
+	<span id="showSpan"></span>
+</body>
+</html>

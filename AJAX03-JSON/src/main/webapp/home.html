@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>AJAX with JSON</title>
+
+<script type="text/javascript">
+	
+	var req;
+	
+	function loadData()
+	{
+		var url="http://date.jsontest.com/";
+		
+		if(window.XMLHttpRequest)
+		{
+			req=new XMLHttpRequest;		
+		}
+		else if(window.ActiveXObject)
+		{
+			req=new ActiveXObject("Microsoft.XMLHTTP");		
+		}
+		
+		try
+		{
+			req.onreadystatechange=function()
+			{
+				if(req.readyState==4)
+				{
+					var jsonObj=JSON.parse(req.responseText);
+					document.getElementById('date').innerHTML=jsonObj.date;
+					document.getElementById('time').innerHTML=jsonObj.time;
+				}
+			}
+			
+			req.open("GET",url,true);
+			req.send();
+		}
+		catch (e) 	
+		{
+			alert("unable to connect");
+		}
+	}
+</script>
+
+</head>
+<body>
+	<h1>AJAX with JSON</h1>
+	
+	Date:<span id="date"></span><br>
+	Time:<span id="time"></span><br>
+	
+	<input type="button" name="loadData" value="load Data" onclick="loadData()">
+</body>
+</html>
